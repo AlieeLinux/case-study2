@@ -8,3 +8,7 @@ wheels/
 
 # Virtual environments
 .venv
+
+uv.lock
+Mainbase.py
+.python-version
