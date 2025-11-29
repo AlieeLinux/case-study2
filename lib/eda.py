@@ -11,7 +11,7 @@ def cat_dist():
    for col in categorical_cols:
       print(df[col].value_counts())
 
-def bar():
+def bar_tool():
    df = pd.read_csv("./AI Tools Adoption.csv")
 
    # Creates bar graph with unique color
@@ -46,6 +46,14 @@ def sentiment_bar():
    plt.xticks(rotation=45)
    plt.show()
 
+def bar_ai_use_purpose():
+   df = pd.read_csv("./AI Tools Adoption.csv")
+
+   # Creates bar graph with unique color
+   sns.countplot(data=df, x='ai_use_purpose', palette='tab20')
+   plt.xticks(rotation=45)
+   plt.show()
+# category vs numeric
 def cat_vs_num():
    df = pd.read_csv("./AI Tools Adoption.csv")
 
@@ -53,5 +61,71 @@ def cat_vs_num():
    plt.xticks(rotation=45)
    plt.show()
 
+def role_bar():
+   df = pd.read_csv("./AI Tools Adoption.csv")
 
-cat_vs_num()
+   sns.boxplot(x='role', y='post_test_score', data=df)
+   plt.xticks(rotation=45)
+   plt.show()
+
+def ai_use_per_week():
+   df = pd.read_csv("./AI Tools Adoption.csv")
+
+   # Fixes 8 days
+   order = sorted(df['ai_use_frequency_per_week'].unique())
+   plt.figure(figsize=(8,5))
+   sns.countplot(x='ai_use_frequency_per_week', data=df, palette='magma', order=order)
+   plt.title("AI Use Frequency per Week")
+   plt.xlabel("Days per Week")
+   plt.ylabel("Number of Users")
+   plt.show()
+
+
+def weekly_usage():
+   df = pd.read_csv("./AI Tools Adoption.csv")
+
+   counts = df['avg_session_duration_min'].value_counts().sort_index()
+
+   x = list(range(len(counts)))  # positions for bars/line
+   y = counts.values
+   
+   ax = sns.barplot(x=x, y=y, palette='magma')
+
+   sns.lineplot(x=x, y=y, color='black', marker='o', ax=ax)
+
+   plt.title("Distribution of Average Session Duration (min)")
+   plt.xlabel("Average Session Duration (minutes)")
+   plt.ylabel("Number of Users")
+
+   plt.show()
+
+def total_weekly():
+   df = pd.read_csv("./AI Tools Adoption.csv")
+
+   sns.countplot(x='ai_use_frequency_per_week', data=df, color='skyblue')
+   plt.title("Total Weekly AI Usage (Per day))")
+   plt.xlabel("Days")
+   plt.ylabel("Number of Users")
+   plt.show()
+
+
+def ethical_concern_plagiarism_bar():
+   df = pd.read_csv("./AI Tools Adoption.csv")
+
+   sns.countplot(x='ethical_concern_plagiarism', data=df, color='skyblue')
+   plt.title("Ethical concerns")
+   plt.xlabel("Days")
+   plt.ylabel("Number of Users")
+   plt.show()
+
+def colMatrix():
+   df = pd.read_csv("./AI Tools Adoption.csv")
+   numeric_cols = df.select_dtypes(include=['int64', 'float64']).columns
+
+   corr = df[numeric_cols].corr()
+
+   plt.figure(figsize=(12,8))
+   sns.heatmap(corr, annot=False, cmap='coolwarm')
+   plt.show()
+
+colMatrix()
